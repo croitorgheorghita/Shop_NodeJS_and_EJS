@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js timeout=10000",
+  "engines": {
+    "node":"10.15.3",
+    "npm": "6.x"
+  },
   "scripts": {
     "test": "mocha --exit",
     "start": "node app.js",
