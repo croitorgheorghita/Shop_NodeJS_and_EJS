@@ -19,13 +19,13 @@ const transport=nodemailer.createTransport(nodemailerSendgrid({
 routes.get('/',async (req,res)=>{
     let products=await Product.find().limit(4)
 
-    res.render('./index.ejs',{title: 'Salud', products: products, isLogged: req.session.isLogged})
+    res.render('./index.ejs',{title: 'Luxury watches', products: products, isLogged: req.session.isLogged})
 })
 
 
 routes.get('/index',async(req,res)=>{
     let products=await Product.find().limit(4)
-    res.render('./index.ejs',{title: 'Salud', products: products, isLogged: req.session.isLogged})
+    res.render('./index.ejs',{title: 'Luxury watches', products: products, isLogged: req.session.isLogged})
 })
 
 

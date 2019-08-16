@@ -37,7 +37,7 @@ exports.login= async(req,res)=>{
             req.session.user=user._id
             req.session.isLogged=true;
             let products=await Product.find().limit(4)
-            res.render('index',{title: 'Ana',products: products,isLogged: req.session.isLogged})
+            res.render('index',{title: 'Luxury watches',products: products,isLogged: req.session.isLogged})
          }
          
      }
