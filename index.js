@@ -19,9 +19,6 @@ const auth_routes=require("./routes/auth_route")
 const admin_routes=require("./routes/admin_routes")
 const User=require("./models/user")
 
-
-
-
 const accesFile=fs.createWriteStream(path.join(__dirname,'access.log'),{flags: 'a'});
 
 app.use(helmet())
@@ -81,5 +78,4 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PA
         )
         .catch((err)=> console.log(err))
 
-//app.listen(3000,()=>console.log(`Server starts on port ${PORT}`))
 module.exports=app

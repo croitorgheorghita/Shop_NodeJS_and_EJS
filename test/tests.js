@@ -91,7 +91,10 @@ describe('Autentication tesing',function(){
         }
     }
     const res={
-       render: sinon.spy()
+          let vasile: 'hdgshdg'
+       render: function(){
+           this.s
+       }
     }
 
     console.log('11111',res)
