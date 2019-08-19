@@ -1,6 +1,5 @@
 const User=require('../models/user')
 const Product=require('../models/product')
-const Order=require('../models/order')
 const {validationResult } = require('express-validator');
 const bcrypt=require('bcrypt')
 const mongoose=require("mongoose")
