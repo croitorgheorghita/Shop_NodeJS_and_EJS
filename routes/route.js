@@ -71,11 +71,12 @@ routes.get('/checkout',async(req,res)=>{
     
     err=[]
     if(req.session.isLogged!==true){
-      err.push("You must be authenticate to add to the cart")
+      err.push("You must be authenticated to add to the cart")
       res.render('./checkout.ejs', {errorMessage: err[0],isLogged: req.session.isLogged})
     }
     else{ 
         
+        try{
         let userFinal=await User.findById(req.session.user)
         
         userFinal.populate('cart.productId').execPopulate().then(user=>{
@@ -92,6 +93,9 @@ routes.get('/checkout',async(req,res)=>{
             }}
             res.render('./checkout.ejs',{errorMessage: null,isLogged: req.session.isLogged,products: products})
         })
+    }catch(err){
+        console.log(err)
+    }
     }
 })
 
