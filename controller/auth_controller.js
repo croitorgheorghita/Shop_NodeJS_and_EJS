@@ -132,7 +132,7 @@ exports.addToCart= async (req,res)=>{
 
     err=[]
     if(req.session.isLogged!==true){
-      err.push("You must be authenticate to add to the cart")
+      err.push("You must be authenticated to add to the cart")
       res.render('./checkout.ejs', {errorMessage: err[0],isLogged: req.session.isLogged})
     }
     else{ 
