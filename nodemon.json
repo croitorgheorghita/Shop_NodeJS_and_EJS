@@ -1,8 +1,0 @@
-{
-   "env":{
-       "MONGO_USER":"ghita",
-       "MONGO_PASSWORD":"9vImhxfuY8vqZjwc",
-       "MONGO_NAME":"test?",
-       "SENDGRID_KEY":"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"
-   } 
-}
