@@ -14,23 +14,24 @@ const path=require('path')
 exports.login= async(req,res)=>{
     errors=validationResult(req)
     err=[]
+   
     if(!errors.isEmpty()){
         console.log(errors.array()[0].msg)
         res.render('account', {errorMessage: errors.array()[0].msg,isLogged: req.session.isLogged})
     }
     else{ 
       try{   
-     var user= await User.findOne({'email': req.body.email})
-     if(!user){
-         err.push("Email not found")
-         res.render('account', {errorMessage: err[0],isLogged: req.session.isLogged})
+        var user= await User.findOne({'email': req.body.email})
+        if(!user){
+            err.push("Email not found")
+            res.render('account', {errorMessage: err[0],isLogged: req.session.isLogged})
          
-     }
-     else{
-         var pass= await bcrypt.compare(req.body.password,user.password)
-         if(pass==false){
-         err.push("Password don't match")
-         res.render('account', {errorMessage: err[0],isLogged: req.session.isLogged})
+         }
+        else{
+            var pass= await bcrypt.compare(req.body.password,user.password)
+            if(pass==false){
+                err.push("Password don't match")
+                res.render('account', {errorMessage: err[0],isLogged: req.session.isLogged})
 
          }
          else{
@@ -57,6 +58,7 @@ exports.register= async (req,res)=>{
         res.render('register', {errorMessage: errors.array()[0].msg,isLogged: req.session.isLogged})
     }
     else{ 
+     try{
      var user= await User.findOne({email: req.body.email})
      if(user){
          err.push("Email is used")
@@ -74,7 +76,11 @@ exports.register= async (req,res)=>{
       }
 
     await User.create(newUser)
-    res.redirect('/account')  }}
+    res.redirect('/account')  }
+    }catch(err){
+        console.log(err)
+    }}
+    
 }
 
 exports.logout= async(req,res)=>{
@@ -105,15 +111,20 @@ exports.addProduct= async(req,res)=>{
     imageUrl=image.path
     var product={
         title: req.body.name,
-        price: req.body.price,
-        imageUrl: imageUrl,
-        description: req.body.description,
+            price: req.body.price,
+                imageUrl: imageUrl,
+                 description: req.body.description,
         userId: req.session.user
     }
-    
+    try{
     var prod=await Product.create(product)
     var products=await Product.find({userId:req.session.user})
-    res.render('./admin_panel.ejs',{isLogged: req.session.isLogged,products:products})}
+    res.render('./admin_panel.ejs',{isLogged: req.session.isLogged,products:products})
+    }
+    catch(err){
+        console.log(err)
+    }
+    }
 }
 
 exports.addToCart= async (req,res)=>{
@@ -125,7 +136,7 @@ exports.addToCart= async (req,res)=>{
       res.render('./checkout.ejs', {errorMessage: err[0],isLogged: req.session.isLogged})
     }
     else{ 
-    
+    try{
     let user=await User.findById(req.session.user)
     
     let index=user.cart.findIndex(pos=>{
@@ -158,6 +169,9 @@ exports.addToCart= async (req,res)=>{
             }}
         res.render('./checkout.ejs',{errorMessage: null,isLogged: req.session.isLogged,products: products})
     })
+    }catch(err){
+        console.log(err)
+    }
     }
 }
 
@@ -168,19 +182,27 @@ exports.clearCart= async (req,res)=>{
     updateCart=[]
 
     user.cart=updateCart
+    try{
     let userUpdate=await User.updateOne({_id:req.session.user },{$set: {
         cart: updateCart
     }})
+   }catch(err){
+       console.log(err)
+   }
     
     res.redirect('/checkout')
 }
 
 exports.takeOrder= async (req,res)=>{
 
+
+    try{
     let user=await User.findById(req.session.user)
     
     newUser=await user.populate('cart.productId').execPopulate()
-
+    }catch(err){
+        console.log(err)
+    }
     //let order=Order.create()
     let number=uuid()
     const orderName='Order ' +number+'.pdf'
