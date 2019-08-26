@@ -23,6 +23,16 @@ const productSchema= new mongoose.Schema({
         required: true
     },
 
+    visit:{
+        type:Number,
+        required: true
+    },
+
+    bought:{
+        type: Number,
+        required: true
+    },
+
     userId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
