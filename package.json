@@ -23,7 +23,7 @@
     "cookies": "^0.7.3",
     "cors": "^2.8.5",
     "ejs": "^2.6.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.16.2",
     "express-validator": "^6.1.1",
     "helmet": "^3.20.0",
